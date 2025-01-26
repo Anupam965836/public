@@ -488,7 +488,7 @@ async def set_duration(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     except ValueError:
         await update.message.reply_text("⚠️ 𝐝𝐮𝐫𝐚𝐭𝐢𝐨𝐧 𝐦𝐮𝐬𝐭 𝐛𝐞 𝐚𝐧 𝐢𝐧𝐭𝐞𝐠𝐞𝐫.")
 
-# Duration command to show users with max duration < 240
+# Duration command to show users with max duration < 120
 async def duration(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not await ensure_correct_group(update, context):
         return
@@ -507,7 +507,7 @@ async def duration(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 if duration is None:
                     continue
                 uid = duration['user_id']
-                max_duration = duration.get('max_duration', 240)
+                max_duration = duration.get('max_duration', 120)
                 
                 # Fetch user details
                 user = users_collection.find_one({"user_id": uid})
@@ -553,7 +553,7 @@ async def clear_duration(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # Reset max duration for the specified user
         db["durations"].update_one(
             {"user_id": target_user_id},
-            {"$set": {"max_duration": 240}},
+            {"$set": {"max_duration": 120}},
             upsert=True
         )
 
